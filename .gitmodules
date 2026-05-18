@@ -1,0 +1,3 @@
+[submodule "submodules/minirtc"]
+	path = submodules/minirtc
+	url = https://github.com/kunkundi/minirtc.git
