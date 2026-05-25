@@ -1,0 +1,368 @@
+root@zbmec:~/tmp/download# ./zFileTransfer vcpkg_test.tar 615310890 iNTcJ2
+Hello World!
+[2026-05-25 14:05:25.902] [zFileTransfer] [info] [TransferManager.cpp:550] Create peer instance [] successful
+[2026-05-25 14:05:25.902] [minirtc] [info] [peer_connection.cpp:147] Read config success, use configure file [false]
+[2026-05-25 14:05:25.902] [minirtc] [info] [peer_connection.cpp:149] Signal server ip [api.crossdesk.cn] port [9099]
+[2026-05-25 14:05:25.902] [minirtc] [info] [peer_connection.cpp:152] Stun server ip [api.crossdesk.cn] port [3478]
+[2026-05-25 14:05:25.902] [minirtc] [info] [peer_connection.cpp:158] Turn server ip [api.crossdesk.cn] port [3478] username [crossdesk] password [crossdeskpw]
+[2026-05-25 14:05:25.902] [minirtc] [info] [peer_connection.cpp:163] Hardware accelerated codec [OFF]
+[2026-05-25 14:05:25.902] [minirtc] [info] [peer_connection.cpp:165] Video format [H.264]
+[2026-05-25 14:05:25.902] [minirtc] [info] [ws_client.cpp:284] Connecting WebSocket: wss://api.crossdesk.cn:9099
+[2026-05-25 14:05:25.902] [zFileTransfer] [info] [TransferManager.cpp:385] recv signal status, user_id[], status [Connecting]
+[2026-05-25 14:05:25.924] [minirtc] [info] [ws_client.cpp:512] Loaded Linux system CA bundle from /etc/ssl/certs/ca-certificates.crt
+[2026-05-25 14:05:25.925] [minirtc] [info] [peer_connection.cpp:250] [] Init finish
+[2026-05-25 14:05:25.925] [zFileTransfer] [info] [TransferManager.cpp:552] Peer [] init finish
+[2026-05-25 14:05:25.925] [minirtc] [info] [peer_connection.cpp:351] Add data stream [file] reliable: true
+[2026-05-25 14:05:25.925] [minirtc] [info] [peer_connection.cpp:351] Add data stream [file_feedback] reliable: true
+[2026-05-25 14:05:25.925] [zFileTransfer] [info] [main.cpp:15] waitting for signal connected...
+[2026-05-25 14:05:25.981] [minirtc] [info] [ws_client.cpp:564] WebSocket connection opened
+[2026-05-25 14:05:25.981] [minirtc] [info] [peer_connection.cpp:210] Login to signal server
+[2026-05-25 14:05:25.981] [minirtc] [info] [peer_connection.cpp:268] [] send login request to signal server
+[2026-05-25 14:05:25.999] [minirtc] [info] [peer_connection.cpp:625] signal type: login
+[2026-05-25 14:05:25.999] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041@xsD9cq], user id[727815041], mode[2]
+[2026-05-25 14:05:25.999] [zFileTransfer] [info] [TransferManager.cpp:496] client id: [727815041]
+[2026-05-25 14:05:25.999] [zFileTransfer] [info] [TransferManager.cpp:497] password: [xsD9cq]
+[2026-05-25 14:05:25.999] [minirtc] [info] [peer_connection.cpp:646] Login success with id [727815041]
+[2026-05-25 14:05:25.999] [zFileTransfer] [info] [TransferManager.cpp:389] recv signal status, user_id[727815041], status [Connected]
+[2026-05-25 14:05:26.925] [zFileTransfer] [info] [main.cpp:19] signal connected
+[2026-05-25 14:05:26.925] [minirtc] [info] [peer_connection.cpp:299] [727815041] sends join transmission request to transmission id [615310890@iNTcJ2]
+[2026-05-25 14:05:26.925] [zFileTransfer] [info] [TransferManager.cpp:36] waitting for connection status...
+[2026-05-25 14:05:27.031] [minirtc] [info] [peer_connection.cpp:625] signal type: offer
+[2026-05-25 14:05:27.031] [minirtc] [info] [peer_connection.cpp:727] [727815041] receive offer from [615310890]
+[2026-05-25 14:05:27.032] [zFileTransfer] [info] [TransferManager.cpp:432] recv connection status, user_id[615310890], status [Connecting]
+[2026-05-25 14:05:27.032] [minirtc] [info] [ice_agent.cpp:141] Nice agent init with [trickle ice|true], [reliable mode|false], [turn support|false], [force turn|false]]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_agent.cpp:241] Nice agent init finish
+[2026-05-25 14:05:27.106] [minirtc] [info] [bitrate_prober.cc:47] Bandwidth probing enabled, set to inactive
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:985] remote video capabilities [96 97 98 99]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:996] local video capabilities [96 99]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:1035] negotiated video pt [96]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:1056] remote audio capabilities [111]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:1095] negotiated audio pt [111]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:1116] remote data capabilities [120 121]
+[2026-05-25 14:05:27.106] [minirtc] [info] [ice_transport.cpp:1155] negotiated data pt [120]
+[2026-05-25 14:05:27.106] [minirtc] [info] [bitrate_prober.cc:47] Bandwidth probing enabled, set to inactive
+[2026-05-25 14:05:27.107] [minirtc] [info] [ice_transport.cpp:581] Send answer with sdp:
+[
+m=video 0 UDP/TLS/RTP/SAVPF 96
+c=IN IP4 0.0.0.0
+a=ice-ufrag:3e4A
+a=ice-pwd:x2EdbwLiHb9i9Zqgw1O9Kc
+m=audio 0 UDP/TLS/RTP/SAVPF 111
+c=IN IP4 0.0.0.0
+a=ice-ufrag:3e4A
+a=ice-pwd:x2EdbwLiHb9i9Zqgw1O9Kc
+m=data 0 UDP/TLS/RTP/SAVPF 120
+c=IN IP4 0.0.0.0
+a=ice-ufrag:3e4A
+a=ice-pwd:x2EdbwLiHb9i9Zqgw1O9Kc
+a=ssrc:1682004114 name:file
+a=x-reliable-data:1682004114 1
+a=ssrc:105916924 name:file_feedback
+a=x-reliable-data:105916924 1
+a=fingerprint:sha-256 E8:09:DE:99:9A:18:E8:61:DA:03:E0:2A:4A:FA:7D:2C:91:BD:C0:F0:C4:F8:68:6F:C6:8E:06:C9:93:DF:77:23
+]
+[2026-05-25 14:05:27.107] [minirtc] [info] [ice_transport.cpp:584] [727815041->615310890] send answer
+[2026-05-25 14:05:27.117] [minirtc] [info] [ice_transport.cpp:115] [727815041->615310890] state_change: gathering
+[2026-05-25 14:05:27.117] [zFileTransfer] [info] [TransferManager.cpp:439] recv connection status, user_id[615310890], status [Gathering]
+[2026-05-25 14:05:27.132] [minirtc] [info] [delay_based_bwe.cc:240] BWE Setting start bitrate to: 2500 kbps
+[2026-05-25 14:05:27.141] [minirtc] [info] [ice_transport.cpp:166] [727815041->615310890] gather_done
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.155] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.156] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.157] [minirtc] [info] [ice_transport.cpp:115] [727815041->615310890] state_change: connecting
+[2026-05-25 14:05:27.157] [zFileTransfer] [info] [TransferManager.cpp:432] recv connection status, user_id[615310890], status [Connecting]
+[2026-05-25 14:05:27.165] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.165] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.165] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.165] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.186] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.196] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.196] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.196] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.196] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.257] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.267] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.267] [minirtc] [info] [peer_connection.cpp:625] signal type: new_candidate
+[2026-05-25 14:05:27.309] [minirtc] [info] [ice_transport.cpp:182] new selected pair: [22] [16]
+[2026-05-25 14:05:27.309] [minirtc] [info] [ice_transport.cpp:191] Traversal using p2p
+[2026-05-25 14:05:27.309] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:27.309] [minirtc] [info] [ice_transport.cpp:115] [727815041->615310890] state_change: connected
+[2026-05-25 14:05:27.309] [minirtc] [info] [minirtc_connection.cpp:45] Ice connected
+[2026-05-25 14:05:27.309] [minirtc] [info] [ice_transport.cpp:115] [727815041->615310890] state_change: ready
+[2026-05-25 14:05:27.309] [minirtc] [info] [probe_controller.cc:235] Repeated initial probing enabled, last allowed probe: 1637801502 now: 1637796502
+[2026-05-25 14:05:27.309] [minirtc] [info] [minirtc_connection.cpp:49] Ice ready
+[2026-05-25 14:05:27.309] [zFileTransfer] [info] [TransferManager.cpp:436] recv connection status, user_id[615310890], status [Connected]
+[2026-05-25 14:05:27.925] [zFileTransfer] [info] [TransferManager.cpp:46] connection [615310890] success
+[2026-05-25 14:05:27.925] [zFileTransfer] [info] [TransferManager.cpp:82] File transfer started: vcpkg_test.tar (273172480 bytes), file_sending_=true, total_bytes_=273172480
+[2026-05-25 14:05:27.925] [zFileTransfer] [info] [file_transfer.cpp:45] FileSender send file vcpkg_test.tar, total size 273172480, file_id=1
+[2026-05-25 14:05:27.925] [minirtc] [info] [data_channel_send.cpp:156] KCP initialized for data channel [file], conv=1682004114, ssrc=1682004114
+[2026-05-25 14:05:28.309] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:29.309] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:30.309] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:31.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:32.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:33.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:34.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:35.299] [minirtc] [info] [data_channel_receive.cpp:182] KCP initialized for data channel [file_feedback], conv=1566207200, ssrc=1566207200
+[2026-05-25 14:05:35.299] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=22216704, delta_seconds=7.37394632
+[2026-05-25 14:05:35.299] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=22216704, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:35.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:36.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:36.368] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5636096, delta_seconds=1.068759978
+[2026-05-25 14:05:36.368] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=27852800, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:37.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:37.389] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3866624, delta_seconds=1.02089739
+[2026-05-25 14:05:37.389] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=31719424, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:38.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:38.619] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=786432, delta_seconds=1.230087425
+[2026-05-25 14:05:38.619] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=32505856, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:39.310] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:39.639] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5636096, delta_seconds=1.019461886
+[2026-05-25 14:05:39.639] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=38141952, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:40.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:40.658] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5308416, delta_seconds=1.019781664
+[2026-05-25 14:05:40.658] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=43450368, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:41.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:41.668] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3276800, delta_seconds=1.009618086
+[2026-05-25 14:05:41.668] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=46727168, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:42.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:42.689] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5242880, delta_seconds=1.020493707
+[2026-05-25 14:05:42.689] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=51970048, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:05:43.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:43.709] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3932160, delta_seconds=1.02009377
+[2026-05-25 14:05:43.709] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=55902208, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:44.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:45.028] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=1114112, delta_seconds=1.319475333
+[2026-05-25 14:05:45.028] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=57016320, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:45.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:46.059] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4194304, delta_seconds=1.030954088
+[2026-05-25 14:05:46.059] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=61210624, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:46.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:47.188] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2424832, delta_seconds=1.128531573
+[2026-05-25 14:05:47.188] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=63635456, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:47.311] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:48.208] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3407872, delta_seconds=1.019928897
+[2026-05-25 14:05:48.208] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=67043328, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:48.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:49.288] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4718592, delta_seconds=1.080019827
+[2026-05-25 14:05:49.288] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=71761920, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:49.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:50.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:50.357] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4128768, delta_seconds=1.069210234
+[2026-05-25 14:05:50.358] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=75890688, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:51.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:51.358] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5046272, delta_seconds=1.000712837
+[2026-05-25 14:05:51.358] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=80936960, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:52.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:52.689] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2949120, delta_seconds=1.330915429
+[2026-05-25 14:05:52.689] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=83886080, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:53.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:53.758] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4390912, delta_seconds=1.069023366
+[2026-05-25 14:05:53.758] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=88276992, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:54.312] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:54.858] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3866624, delta_seconds=1.099970861
+[2026-05-25 14:05:54.858] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=92143616, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:55.313] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:55.989] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=655360, delta_seconds=1.131069709
+[2026-05-25 14:05:55.990] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=92798976, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:56.313] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:56.998] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4128768, delta_seconds=1.008067965
+[2026-05-25 14:05:56.998] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=96927744, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:57.313] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:58.059] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2424832, delta_seconds=1.060984735
+[2026-05-25 14:05:58.059] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=99352576, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:05:58.313] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:05:59.059] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5570560, delta_seconds=1.000096965
+[2026-05-25 14:05:59.059] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=104923136, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:05:59.313] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:00.099] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5636096, delta_seconds=1.040007656
+[2026-05-25 14:06:00.099] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=110559232, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:00.313] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:01.180] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5898240, delta_seconds=1.080617257
+[2026-05-25 14:06:01.180] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=116457472, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:01.314] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:02.269] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5832704, delta_seconds=1.089107322
+[2026-05-25 14:06:02.269] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=122290176, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:02.314] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:03.282] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4128768, delta_seconds=1.013542252
+[2026-05-25 14:06:03.283] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=126418944, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:03.314] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:04.314] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:04.468] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2490368, delta_seconds=1.185590326
+[2026-05-25 14:06:04.468] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=128909312, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:05.314] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:05.477] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3473408, delta_seconds=1.009165788
+[2026-05-25 14:06:05.477] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=132382720, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:06.314] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:06.568] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2883584, delta_seconds=1.090698962
+[2026-05-25 14:06:06.568] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=135266304, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:07.315] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:07.609] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4128768, delta_seconds=1.040734601
+[2026-05-25 14:06:07.609] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=139395072, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:08.315] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:08.718] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2490368, delta_seconds=1.109555473
+[2026-05-25 14:06:08.718] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=141885440, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:09.315] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:09.719] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3735552, delta_seconds=1.00037999
+[2026-05-25 14:06:09.719] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=145620992, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:10.315] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:10.729] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2228224, delta_seconds=1.010119685
+[2026-05-25 14:06:10.729] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=147849216, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:11.315] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:11.738] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2359296, delta_seconds=1.008655847
+[2026-05-25 14:06:11.738] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=150208512, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:12.315] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:12.779] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2752512, delta_seconds=1.041226561
+[2026-05-25 14:06:12.779] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=152961024, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:13.316] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:13.788] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3866624, delta_seconds=1.009122181
+[2026-05-25 14:06:13.788] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=156827648, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:14.316] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:14.858] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2359296, delta_seconds=1.069581939
+[2026-05-25 14:06:14.858] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=159186944, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:15.316] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:15.869] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3342336, delta_seconds=1.010588279
+[2026-05-25 14:06:15.869] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=162529280, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:16.316] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:16.909] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=1114112, delta_seconds=1.040400528
+[2026-05-25 14:06:16.909] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=163643392, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:17.316] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:18.099] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4456448, delta_seconds=1.189851285
+[2026-05-25 14:06:18.099] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=168099840, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:18.316] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:19.110] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2293760, delta_seconds=1.010920101
+[2026-05-25 14:06:19.110] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=170393600, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:19.317] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:20.317] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:20.322] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4259840, delta_seconds=1.211755876
+[2026-05-25 14:06:20.322] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=174653440, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:21.317] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:21.699] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2228224, delta_seconds=1.376797849
+[2026-05-25 14:06:21.699] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=176881664, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:22.317] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:22.709] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3670016, delta_seconds=1.00985322
+[2026-05-25 14:06:22.709] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=180551680, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:23.317] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:23.738] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=720896, delta_seconds=1.028943385
+[2026-05-25 14:06:23.738] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=181272576, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:24.318] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:24.763] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3997696, delta_seconds=1.025473277
+[2026-05-25 14:06:24.763] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=185270272, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:25.318] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:25.839] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5701632, delta_seconds=1.075808115
+[2026-05-25 14:06:25.839] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=190971904, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:26.318] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:27.039] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2359296, delta_seconds=1.20039707
+[2026-05-25 14:06:27.039] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=193331200, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:27.318] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:28.108] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4063232, delta_seconds=1.068827242
+[2026-05-25 14:06:28.108] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=197394432, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:28.318] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:29.118] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4063232, delta_seconds=1.009850325
+[2026-05-25 14:06:29.118] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=201457664, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:29.318] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:30.169] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3997696, delta_seconds=1.050619463
+[2026-05-25 14:06:30.169] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=205455360, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:30.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:31.230] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2621440, delta_seconds=1.060564095
+[2026-05-25 14:06:31.230] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=208076800, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:31.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:32.278] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2228224, delta_seconds=1.048347342
+[2026-05-25 14:06:32.278] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=210305024, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:32.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:33.299] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3932160, delta_seconds=1.02085792
+[2026-05-25 14:06:33.299] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=214237184, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:33.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:34.307] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4915200, delta_seconds=1.008422862
+[2026-05-25 14:06:34.307] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=219152384, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:34.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:35.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:35.328] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5439488, delta_seconds=1.021139858
+[2026-05-25 14:06:35.329] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=224591872, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:36.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:36.397] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2752512, delta_seconds=1.06884559
+[2026-05-25 14:06:36.397] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=227344384, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:37.319] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:37.418] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5898240, delta_seconds=1.02076821
+[2026-05-25 14:06:37.418] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=233242624, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:38.320] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:38.427] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=4063232, delta_seconds=1.008889605
+[2026-05-25 14:06:38.427] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=237305856, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:39.320] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:39.498] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2949120, delta_seconds=1.070716549
+[2026-05-25 14:06:39.498] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=240254976, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:40.320] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:40.568] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3801088, delta_seconds=1.069957878
+[2026-05-25 14:06:40.568] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=244056064, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:41.320] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:41.619] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3932160, delta_seconds=1.051420684
+[2026-05-25 14:06:41.619] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=247988224, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:42.320] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:42.688] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2555904, delta_seconds=1.068736001
+[2026-05-25 14:06:42.688] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=250544128, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:43.320] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:43.828] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2359296, delta_seconds=1.139597321
+[2026-05-25 14:06:43.828] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=252903424, total_size=273172480, rate_bps=2 MB/s
+[2026-05-25 14:06:44.321] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:44.839] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=6356992, delta_seconds=1.01108461
+[2026-05-25 14:06:44.839] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=259260416, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:45.321] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:45.889] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=5701632, delta_seconds=1.049858882
+[2026-05-25 14:06:45.889] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=264962048, total_size=273172480, rate_bps=4 MB/s
+[2026-05-25 14:06:46.321] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:47.019] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=2293760, delta_seconds=1.130256426
+[2026-05-25 14:06:47.019] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=267255808, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:47.321] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:48.099] [zFileTransfer] [info] [TransferManager.cpp:278] FileTransferAck: delta_bytes=3866624, delta_seconds=1.079443243
+[2026-05-25 14:06:48.099] [zFileTransfer] [info] [TransferManager.cpp:308] File transfer progress: file_id=1, sent_bytes=271122432, total_size=273172480, rate_bps=3 MB/s
+[2026-05-25 14:06:48.321] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:49.322] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:50.322] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:51.322] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:52.322] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:53.322] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:54.322] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:55.323] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:56.323] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:57.323] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:58.323] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+[2026-05-25 14:06:59.323] [zFileTransfer] [info] [TransferManager.cpp:468] recv Net Status Report client id[727815041], user id[615310890], mode[0]
+^C
+root@zbmec:~/tmp/download# scp -P 40010 vcpkg_test.tar  root@mdclub.zbmec.com:/zb/zjx/tmp/
+root@mdclub.zbmec.com's password:
+vcpkg_test.tar                                                                                                                                                                2% 5936KB   2.8MB/s   01:30 ETA
+vcpkg_test.tar                                                                                                                                                                4%   12MB   2.0MB/s   02:07 ETA
+vcpkg_test.tar                                                                                                                                                                5%   15MB   1.7MB/s   02:24 ETA
+vcpkg_test.tar                                                                                                                                                                6%   18MB   1.5MB/s   02:41 ETA
+vcpkg_test.tar                                                                                                                                                               11%   29MB   1.2MB/s   03:12 ETA
+vcpkg_test.tar                                                                                                                                                               22%   60MB   1.0MB/s   03:19 ETA
+vcpkg_test.tar                                                                                                                                                               32%   85MB   1.0MB/s   02:55 ETA
+vcpkg_test.tar                                                                                                                                                               42%  110MB   1.0MB/s   02:30 ETA
+vcpkg_test.tar                                                                                                                                                               58%  153MB   1.0MB/s   01:47 ETA
+vcpkg_test.tar                                                                                                                                                               71%  187MB   1.0MB/s   01:14 ETA
+vcpkg_test.tar                                                                                                                                                               87%  229MB   1.0MB/s   00:32 ETA
+vcpkg_test.tar                                                                                                                                                               97%  255MB   1.0MB/s   00:05 ETA
+vcpkg_test.tar                                                                                                                                                              100%  261MB   1.0MB/s   04:20
+root@zbmec:~/tmp/download#
+root@zbmec:~/tmp/download#
+root@zbmec:~/tmp/download#
+
+
