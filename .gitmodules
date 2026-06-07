@@ -1,3 +1,4 @@
 [submodule "submodules/minirtc"]
 	path = submodules/minirtc
-	url = https://github.com/kunkundi/minirtc.git
+	url = https://github.com/zhangjixiang2018/minirtc.git
+	branch = file_transfer 
