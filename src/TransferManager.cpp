@@ -118,6 +118,9 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
     int ret = sender.SendFile(
         file_path, file_path.filename().string(),
         [peer, remote_id](const char* buf, size_t sz) -> int {
+          static int read_count = 0;
+          read_count = read_count + sz;
+          // LOG_INFO("***read_count: {}", read_count);
           return SendReliableDataFrameToPeer(
               peer, buf, sz, FILE_LABEL.c_str(), remote_id.c_str(),
               remote_id.size());
@@ -236,7 +239,8 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
       return;
     }
 
-    {
+    if ((ack.flags & 0x01) == 0) {
+      // 每秒更新一次进度
       const auto now = std::chrono::steady_clock::now();
       std::chrono::steady_clock::time_point last_time;
       {
@@ -274,9 +278,6 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
         const uint64_t delta_bytes = ack.acked_offset - last_bytes;
         const double delta_seconds =
             std::chrono::duration<double>(now - last_time).count();
-        
-        LOG_INFO("FileTransferAck: delta_bytes={}, delta_seconds={}",
-                 delta_bytes, delta_seconds);
 
         if (delta_seconds > 0.0 && delta_bytes > 0) {
           const double bps =
@@ -305,9 +306,51 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
     state->file_send_last_bytes_ = ack.acked_offset;
     auto now = std::chrono::steady_clock::now();
     state->file_send_last_update_time_ = now;
-    LOG_INFO("File transfer progress: file_id={}, sent_bytes={}, "
-             "total_size={}, rate_bps={} MB/s",
-             ack.file_id, ack.acked_offset, ack.total_size, rate_bps / (8 * 1024 * 1024));
+    {
+      uint64_t remaining_bytes = ack.total_size - ack.acked_offset;
+      double seconds_left = 0.0;
+      if (rate_bps > 0) {
+          seconds_left = remaining_bytes * 8.0 / rate_bps;
+      }
+
+      // 速率单位
+      double rate_kbps = rate_bps / 8.0 / 1024;
+      double rate_mbps = rate_kbps / 1024;
+
+      std::string rate_str;
+      if (rate_mbps >= 1.0)
+          rate_str = fmt::format("{:.2f} MB/s", rate_mbps);
+      else
+          rate_str = fmt::format("{:.2f} KB/s", rate_kbps);
+
+      // ETA
+      std::string eta_str;
+      if (seconds_left > 0) {
+          int sec = static_cast<int>(seconds_left);
+          int h = sec / 3600;
+          int m = (sec % 3600) / 60;
+          int s = sec % 60;
+
+          if (h > 0)
+              eta_str = fmt::format("{}h {}m {}s", h, m, s);
+          else if (m > 0)
+              eta_str = fmt::format("{}m {}s", m, s);
+          else
+              eta_str = fmt::format("{}s", s);
+      } else {
+          eta_str = "N/A";
+      }
+
+      LOG_INFO(
+          "File transfer progress: file_id={}, sent={}/{} ({:.2f}%), rate={}, ETA={}",
+          ack.file_id,
+          ack.acked_offset,
+          ack.total_size,
+          ack.total_size > 0 ? (ack.acked_offset * 100.0 / ack.total_size) : 0,
+          rate_str,
+          eta_str
+      );      
+    }
 
     // Update file transfer list: update progress and rate
     {
@@ -465,7 +508,8 @@ void TransferManager::OnNetStatusReport(const char* client_id, size_t client_id_
                                const XNetTrafficStats* net_traffic_stats,
                                const char* user_id, const size_t user_id_size,
                                void* user_data) {
-  LOG_INFO("recv Net Status Report client id[{}], user id[{}], mode[{}]", client_id, user_id, int(mode));
+  // LOG_INFO("recv Net Status Report client id[{}], user id[{}], mode[{}]", client_id, user_id, int(mode));
+  // TODO 看看还有哪些值得关注的信息
   TransferManager* mgr = (TransferManager*)user_data;
   if (!mgr) {
     return;
@@ -493,8 +537,8 @@ void TransferManager::OnNetStatusReport(const char* client_id, size_t client_id_
     memset(mgr->_client_id_with_password, 0, sizeof(mgr->_client_id_with_password));
     strncpy(mgr->_client_id_with_password, client_id, sizeof(mgr->_client_id_with_password) - 1);
     mgr->_client_id_with_password[sizeof(mgr->_client_id_with_password) - 1] = '\0';
-    LOG_INFO("client id: [{}]", mgr->_client_id);
-    LOG_INFO("password: [{}]", mgr->_password_saved);
+    LOG_INFO("client id: [{} {}]", mgr->_client_id, mgr->_password_saved);
+    // LOG_INFO("password: [{}]", mgr->_password_saved);
   }
 }
 

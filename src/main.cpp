@@ -9,10 +9,10 @@ using namespace zFileTransfer;
 
 int main(int argc, char** argv) {
   cout << "Hello World!" << endl;
+  LOG_INFO("waitting for signal connected...");
 
   TransferManager transfer_manager;
   transfer_manager.Start();
-  LOG_INFO("waitting for signal connected...");
   while (transfer_manager.GetSignalStatus() != SignalStatus::SignalConnected) {
     sleep(1);
   }

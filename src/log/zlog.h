@@ -6,6 +6,7 @@
 
 #ifndef _LOG_H_
 #define _LOG_H_
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 
 #include <chrono>
 #include <iomanip>
@@ -22,8 +23,6 @@
 #include "spdlog/sinks/rotating_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
-
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_INFO
 
 namespace zFileTransfer {
 

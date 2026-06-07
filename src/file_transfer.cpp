@@ -275,6 +275,9 @@ bool FileReceiver::HandleChunk(const FileChunkHeader& header,
     ack.total_size = header.total_size;
     ack.flags = 0;
 
+    LOG_DEBUG("FileReceiver: send ACK for file_id={}, acked_offset={}, received={}, total_size={}",
+             header.file_id, ack.acked_offset, ctx.received, ack.total_size);
+    
     bool is_last = (header.flags & 0x02) != 0;
     if (is_last || ctx.received >= ctx.total_size) {
       ack.flags |= 0x01;  // completed

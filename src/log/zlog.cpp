@@ -35,6 +35,7 @@ std::shared_ptr<spdlog::logger> get_logger() {
     g_logger = std::make_shared<spdlog::logger>(LOGGER_NAME, sinks.begin(),
                                                 sinks.end());
     g_logger->flush_on(spdlog::level::info);
+    g_logger->set_level(spdlog::level::trace);
     spdlog::register_logger(g_logger);
   });
 
