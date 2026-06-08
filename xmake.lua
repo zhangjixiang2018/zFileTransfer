@@ -7,7 +7,21 @@ add_rules("mode.debug", "mode.release")
 
 add_requires("spdlog 1.14.1", {system = false})
 
--- 这行代码会让 Xmake 自动去读取并编译 submodules/minirtc 目录下的 xmake.lua
+-- target("libhv_build")
+--   set_kind("phony")
+--   before_build(function (target)
+--     local mode = is_mode("release") and "Release" or "Debug"
+--     local install_dir = "$(projectdir)/build/libhv_dist"
+    
+--     os.mkdir(install_dir)
+--     os.exec(string.format(
+--         "cmake -S submodules/libhv -B build/libhv -DCMAKE_BUILD_TYPE=%s -DBUILD_SHARED=OFF -DCMAKE_INSTALL_PREFIX=%s", 
+--         mode, install_dir
+--     ))
+    
+--     os.exec(string.format("cmake --build build/libhv --config %s --target install", mode))
+--   end)
+
 includes("submodules/minirtc")
 
 target("zFileTransfer")
@@ -23,6 +37,27 @@ target("zFileTransfer")
   add_deps("minirtc")
 
   add_packages("spdlog")
+
+  -- add_deps("libhv_build")
+
+  before_build(function (target)
+    local mode = is_mode("release") and "Release" or "Debug"
+    local install_dir = path.absolute("build/libhv_dist")
+    
+    -- 如果头文件已经存在，说明之前编译过了，直接跳过以加速二次编译
+    if not os.isdir(install_dir .. "/include/hv") then
+      os.mkdir(install_dir)
+      os.exec(string.format(
+        "cmake -S submodules/libhv -B build/libhv -DCMAKE_BUILD_TYPE=%s -DBUILD_SHARED=OFF -DCMAKE_INSTALL_PREFIX=%s", 
+        mode, install_dir
+      ))
+      os.exec(string.format("cmake --build build/libhv --config %s --target install", mode))
+    end
+  end)
+
+  add_includedirs("build/libhv_dist/include", {public = true})
+  add_linkdirs("build/libhv_dist/lib", {public = true})
+  add_links("hv")
 
   -- 编译选项优化（Debug 模式开启调试，Release 模式开启极限优化）
   if is_mode("debug") then

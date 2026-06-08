@@ -4,6 +4,7 @@
 #include "zlog.h"
 #include "common/constans.h"
 #include "file_transfer.h"
+#include "config_center/config_center.h"
 
 namespace zFileTransfer {
 TransferManager::TransferManager() {
@@ -538,6 +539,10 @@ void TransferManager::OnNetStatusReport(const char* client_id, size_t client_id_
     strncpy(mgr->_client_id_with_password, client_id, sizeof(mgr->_client_id_with_password) - 1);
     mgr->_client_id_with_password[sizeof(mgr->_client_id_with_password) - 1] = '\0';
     LOG_INFO("client id: [{} {}]", mgr->_client_id, mgr->_password_saved);
+    ConfigCenter& config_center = ConfigCenter::GetInstance();
+    config_center.SetClientId(mgr->_client_id);
+    config_center.SetPassword(mgr->_password_saved);
+
     // LOG_INFO("password: [{}]", mgr->_password_saved);
   }
 }
@@ -545,7 +550,23 @@ void TransferManager::OnNetStatusReport(const char* client_id, size_t client_id_
 
 int TransferManager::CreateConnectionPeer() {
   // TODO
+  ConfigCenter& config_center = ConfigCenter::GetInstance();
+  std::string client_id = config_center.GetClientId();
+  std::string password = config_center.GetPassword();
+  if (!client_id.empty() && !password.empty()) {
+    std::string id_with_pasw = client_id + "@" + password;
+    memset(_client_id_with_password, 0, sizeof(_client_id_with_password));
+    strncpy(_client_id_with_password, id_with_pasw.c_str(), sizeof(_client_id_with_password) - 1);
+    _client_id_with_password[sizeof(_client_id_with_password) - 1] = '\0';    
+  }
+
+  _signal_server_ip = config_center.GetSignalServerIp();
+  _signal_server_port = config_center.GetSignalServerPort();
+  _coturn_server_port = config_center.GetCoturnServerPort();
   _params.user_id = _client_id_with_password;
+
+  LOG_INFO("signal server ip: [{}], signal_server_port: [{}], coturn_server_port: [{}], client_id_with_password: [{}]",
+    _signal_server_ip, _signal_server_port, _coturn_server_port, _client_id_with_password);
 
   _params.use_cfg_file = false;
   strncpy((char*)_params.signal_server_ip, _signal_server_ip.c_str(),
@@ -578,8 +599,6 @@ int TransferManager::CreateConnectionPeer() {
 
   _params.on_receive_video_buffer = nullptr;
   _params.on_receive_data_buffer = OnReceiveDataBufferCb;
-  // _params.on_receive_video_frame = OnReceiveVideoBufferCb;
-  // _params.on_receive_audio_buffer = OnReceiveAudioBufferCb;
   _params.on_receive_audio_buffer = nullptr;
   _params.on_receive_video_frame = nullptr;
   _params.on_signal_status = OnSignalStatusCb;
