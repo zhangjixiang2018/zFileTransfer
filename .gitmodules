@@ -1,4 +1,7 @@
 [submodule "submodules/minirtc"]
 	path = submodules/minirtc
 	url = https://github.com/zhangjixiang2018/minirtc.git
-	branch = file_transfer 
+	branch = file_transfer
+[submodule "submodules/libhv"]
+	path = submodules/libhv
+	url = https://github.com/ithewei/libhv.git
