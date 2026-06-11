@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/ubuntu22/code/crossdesk/libnice",
+                "/home/ubuntu22/code/crossdesk/kcp",
+                "/home/ubuntu22/code/crossdesk/spdlog"
+            ],
+            "defines": []
+        }
+    ],
+    "version": 4
+}

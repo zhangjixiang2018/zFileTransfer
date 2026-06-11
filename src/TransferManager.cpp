@@ -26,6 +26,11 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
                                         const std::string& remote_id,
                                         const std::string& password)
 {
+  if (!std::filesystem::is_regular_file(file_path)) {
+    LOG_ERROR("File path [{}] is not a regular file", file_path.string().c_str());
+    exit(-1);
+  }
+  
   _remote_id = remote_id;
   _remote_password = password;
   int ret = ConnectTo(remote_id, password);
@@ -45,7 +50,6 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
     }
   }
   LOG_INFO("connection [{}] success", remote_id);
-
 
   // return; // TODO
 
@@ -517,6 +521,7 @@ void TransferManager::OnNetStatusReport(const char* client_id, size_t client_id_
   }
 
   if (strchr(client_id, '@') != nullptr && strchr(user_id, '-') == nullptr) {
+    LOG_INFO("**client id: [{}]", client_id);
     std::string id, password;
     const char* at_pos = strchr(client_id, '@');
     if (at_pos == nullptr) {
@@ -544,6 +549,15 @@ void TransferManager::OnNetStatusReport(const char* client_id, size_t client_id_
     config_center.SetPassword(mgr->_password_saved);
 
     // LOG_INFO("password: [{}]", mgr->_password_saved);
+  }
+
+  if (net_traffic_stats) {
+    // TODO data_outbound_stats.bitrate 与实际发送速率不一致
+    // LOG_INFO("##client id: [{}]", client_id);
+    // auto data_inbound_stats = net_traffic_stats->data_inbound_stats;
+    // auto data_outbound_stats = net_traffic_stats->data_outbound_stats;
+    // LOG_INFO("data inbound stats: [{} {} {}]", data_inbound_stats.bitrate, data_inbound_stats.rtp_packet_count, data_inbound_stats.loss_rate);
+    // LOG_INFO("data outbound stats: [{} {}]", data_outbound_stats.bitrate, data_outbound_stats.rtp_packet_count);
   }
 }
 
