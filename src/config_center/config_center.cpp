@@ -1,6 +1,21 @@
 #include "config_center/config_center.h"
+
+#include <fstream>
+
 #include "common/constans.h"
 #include "hv/hbase.h"
+#include "zlog.h"
+
+using namespace zFileTransfer;
+
+const std::string g_cfg_str = R"(
+[Settings]
+signal_server_ip = api.crossdesk.cn
+signal_server_port = 9099
+coturn_server_port = 3478
+client_id =
+password =
+)";
 
 ConfigCenter& ConfigCenter::GetInstance() {
   static ConfigCenter instance;
@@ -19,9 +34,15 @@ ConfigCenter::~ConfigCenter() {
 
 
 void ConfigCenter::Init(std::string file_path) {
-  // if (!hv_exists(file_path.c_str())) {
-
-  // }
+  if (!hv_exists(file_path.c_str())) {
+    std::ofstream f(file_path);
+    if (!f.is_open()) {
+      LOG_ERROR("Open cfg file {} failed!", file_path);
+      return;
+    }
+    f << g_cfg_str;
+    f.close();
+  }
 
   _ini_parser = std::make_unique<IniParser>();
   _ini_parser->LoadFromFile(file_path.c_str());
