@@ -11,6 +11,8 @@
 #include <vector>
 #include <shared_mutex>
 #include "minirtc.h"
+#include "file_transfer.h"
+#include "common/constans.h"
 
 namespace zFileTransfer {
 
@@ -58,11 +60,17 @@ public:
 
   int Start();
 
-  void StartFileTransfer(const std::filesystem::path& file_path,
-                          const std::string& file_label,
+  int StartFileTransfer(const std::filesystem::path& file_path,
                           const std::string& remote_id,
-                          const std::string& password);
+                          const std::string& password,
+                          RUN_MODEL run_model = EN_SENDER);
 
+  int RequestFile(const std::string& file_path,
+                  const std::string& remote_id, 
+                  const std::string& password);
+  
+  void HandFileReq(FileTransferAck ack, std::vector<char> data, const std::string& remote_id );
+  
   
   SignalStatus GetSignalStatus() const { return _signal_status; }
   // TODO 配置文件，使用libhv

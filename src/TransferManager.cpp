@@ -3,7 +3,6 @@
 
 #include "zlog.h"
 #include "common/constans.h"
-#include "file_transfer.h"
 #include "config_center/config_center.h"
 
 namespace zFileTransfer {
@@ -21,37 +20,104 @@ TransferManager::~TransferManager() {
 }
 
 
-void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
-                                        const std::string& file_label,
-                                        const std::string& remote_id,
-                                        const std::string& password)
+int TransferManager::RequestFile(const std::string& file_path,
+                                  const std::string& remote_id, 
+                                  const std::string& password)
 {
-  if (!std::filesystem::is_regular_file(file_path)) {
-    LOG_ERROR("File path [{}] is not a regular file", file_path.string().c_str());
-    exit(-1);
-  }
-  
-  _remote_id = remote_id;
-  _remote_password = password;
+  LOG_INFO("receiver mode: remote_id={}, remote_file={}, passwd={}", 
+    remote_id.c_str(), file_path.c_str(), password.c_str());
+
+  // 1.连接
   int ret = ConnectTo(remote_id, password);
   if (ret < 0) {
     LOG_ERROR("Failed to connect to remote peer [{}], ret={}", remote_id.c_str(), ret);
-    return;
+    return -1;
   }
 
-  LOG_INFO("waitting for connection status...");
-  int try_count = 0;
-  while (_connection_status != ConnectionStatus::Connected && try_count < 10) {
+  // 2.发送FileTransferAck
+  FileTransferAck ack{};
+  ack.magic = kFileAckMagic;
+  ack.file_id = 0;
+  ack.acked_offset = 0;
+  ack.total_size = 0;
+  ack.flags |= FLAG_FILE_REQ;
+  ack.file_name_len = file_path.size();
+  int total_size = sizeof(FileTransferAck) + ack.file_name_len;
+  std::vector<char> send_buf;
+  send_buf.resize(total_size);
+  memcpy(send_buf.data(), &ack, sizeof(FileTransferAck));
+  memcpy(send_buf.data() + sizeof(FileTransferAck), file_path.data(), ack.file_name_len);
+  LOG_INFO("Send file requst, remote_id={}, remote_file={}", 
+    remote_id.c_str(), file_path.c_str());
+  SendReliableDataFrame(_peer, send_buf.data(),
+            total_size, FILE_FEEDBACK_LABEL.c_str());
+  return 0;
+}
+
+
+void TransferManager::HandFileReq(FileTransferAck ack, std::vector<char> data, const std::string& remote_user_id) 
+{
+  std::string file_path_str(data.data() + sizeof(FileTransferAck), ack.file_name_len);
+  std::filesystem::path file_path(file_path_str);
+
+  LOG_INFO("Hand file requst..., file path is:{}, remote_user_id:{}", file_path_str, remote_user_id);
+  int wait_time = 0;
+  while (_connection_status != ConnectionStatus::Connected) {
     sleep(1);
-    try_count++;
-    if (try_count >= 10) {
-      LOG_ERROR("Failed to connect to remote peer [{}], timeout", remote_id.c_str());
-      exit(1);
+    wait_time++;
+    if (wait_time > 60) {
+      LOG_ERROR("Hand file requst time out!");
+      exit(-1);
     }
   }
-  LOG_INFO("connection [{}] success", remote_id);
 
-  // return; // TODO
+  if (!std::filesystem::exists (file_path) || 
+      !std::filesystem::is_regular_file(file_path)) {
+    FileChunkHeader header{};
+    header.magic = kFileChunkMagic;
+    header.file_id = 0;
+    header.offset = 0;
+    header.total_size = 0;
+    header.chunk_size = 0;
+    header.name_len = 0;
+    header.flags |= 0x04;
+
+    std::string err_msg = "File path " + file_path_str + " is not exists or not a regular file";
+    int total_size = sizeof(FileChunkHeader) + err_msg.size();
+    std::vector<char> send_buf;
+    send_buf.resize(total_size);
+    memcpy(send_buf.data(), &header, sizeof(FileChunkHeader));
+    memcpy(send_buf.data() + sizeof(FileChunkHeader), err_msg.data(), err_msg.size());
+    SendReliableDataFrameToPeer(_peer, send_buf.data(), total_size, FILE_LABEL.c_str(), 
+      remote_user_id.c_str(), remote_user_id.size());
+    LOG_ERROR("File path [{}] is not exists or not a regular file", file_path.string().c_str());
+    sleep(2);
+    exit(-1);
+  }
+
+  StartFileTransfer(file_path, remote_user_id, "", EN_DEFAULT);
+}
+
+
+int TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
+                                        const std::string& remote_id,
+                                        const std::string& password,
+                                        RUN_MODEL run_model)
+{
+  if (run_model == EN_SENDER) {
+    LOG_INFO("sender mode: file={}, remote_id={}, passwd={}", file_path.c_str(), remote_id.c_str(), password.c_str());
+    if (!std::filesystem::is_regular_file(file_path)) {
+      LOG_ERROR("File path [{}] is not a regular file", file_path.string().c_str());
+      return -1;
+    }
+
+
+    int ret = ConnectTo(remote_id, password);
+    if (ret < 0) {
+      LOG_ERROR("Failed to connect to remote peer [{}], ret={}", remote_id.c_str(), ret);
+      return -1;
+    }
+  }
 
   PeerPtr* peer = this->_peer;
   TransferManager* transfer_mgr_ptr = this;
@@ -59,7 +125,7 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
   bool expected = false;
   if (!_file_transfer.file_sending_.compare_exchange_strong(expected, true)) {
     LOG_WARN("Another file transfer is in progress, please wait until it finishes");
-    return;
+    return -1;
   }
 
   std::thread([peer, file_path, transfer_mgr_ptr, remote_id](){
@@ -93,30 +159,7 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
     FileSender sender;
     uint32_t file_id = FileSender::NextFileId();
 
-    {
-      std::lock_guard<std::shared_mutex> lock(
-          transfer_mgr_ptr->file_id_to_transfer_state_mutex_);
-      transfer_mgr_ptr->file_id_to_transfer_state_[file_id] = state;
-    }
-
     state->current_file_id_ = file_id;
-
-    // Update file transfer list: mark as sending
-    // Find the queued file that matches the exact file path
-    {
-      std::lock_guard<std::mutex> lock(state->file_transfer_list_mutex_);
-      for (auto& info : state->file_transfer_list_) {
-        if (info.file_path == file_path &&
-            info.status == FileTransferState::FileTransferStatus::Queued) {
-          info.status = FileTransferState::FileTransferStatus::Sending;
-          info.file_id = file_id;
-          info.file_size = total_size;
-          info.sent_bytes = 0;
-          break;
-        }
-      }
-    }
-
     state->file_transfer_window_visible_ = true;
 
     // Progress will be updated via ACK from receiver
@@ -125,7 +168,6 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
         [peer, remote_id](const char* buf, size_t sz) -> int {
           static int read_count = 0;
           read_count = read_count + sz;
-          // LOG_INFO("***read_count: {}", read_count);
           return SendReliableDataFrameToPeer(
               peer, buf, sz, FILE_LABEL.c_str(), remote_id.c_str(),
               remote_id.size());
@@ -136,35 +178,12 @@ void TransferManager::StartFileTransfer(const std::filesystem::path& file_path,
     // receiver
     // On error, set file_sending_ to false immediately to allow next file
     if (ret != 0) {
-      state->file_sending_ = false;
-      state->file_transfer_window_visible_ = false;
-      state->file_sent_bytes_ = 0;
-      state->file_total_bytes_ = 0;
-      state->file_send_rate_bps_ = 0;
-      state->current_file_id_ = 0;
-
-      // Unregister file_id mapping on error
-      {
-        std::lock_guard<std::shared_mutex> lock(
-            transfer_mgr_ptr->file_id_to_transfer_state_mutex_);
-        transfer_mgr_ptr->file_id_to_transfer_state_.erase(file_id);
-      }
-
-      // Update file transfer list: mark as failed
-      {
-        std::lock_guard<std::mutex> lock(state->file_transfer_list_mutex_);
-        for (auto& info : state->file_transfer_list_) {
-          if (info.file_id == file_id) {
-            info.status = FileTransferState::FileTransferStatus::Failed;
-            break;
-          }
-        }
-      }
-
       LOG_ERROR("FileSender::SendFile failed for [{}], ret={}",
                 file_path.string().c_str(), ret);
     }
   }).detach();
+
+  return 0;
 }
 
 
@@ -172,6 +191,7 @@ int TransferManager::Start() {
   int ret = CreateConnectionPeer();
   return ret;
 } 
+
 
 void TransferManager::OnReceiveAudioBufferCb(const char* data, size_t size,
                                     const char* user_id, size_t user_id_size,
@@ -202,7 +222,7 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
     if (!configured_path.empty()) {
       receiver.SetOutputDir(std::filesystem::u8path(configured_path));
     } else if (receiver.OutputDir().empty()) {
-      receiver = FileReceiver();  // re-init with default desktop path
+      receiver = FileReceiver();
     }
     receiver.SetOnSendAck([transfer_mgr_ptr,
                            remote_user_id](const FileTransferAck& ack) -> int {
@@ -211,7 +231,10 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
           sizeof(FileTransferAck), FILE_FEEDBACK_LABEL.c_str());
     });
 
-    receiver.OnData(data, size);
+    bool ret = receiver.OnData(data, size);
+    if (!ret) {
+      exit(-1);
+    }
     return;
   } else if (source_id == FILE_FEEDBACK_LABEL) {
     if (size < sizeof(FileTransferAck)) {
@@ -229,15 +252,18 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
       return;
     }
 
-    TransferManager::FileTransferState* state = nullptr;
-    {
-      std::shared_lock lock(transfer_mgr_ptr->file_id_to_transfer_state_mutex_);
-      auto it = transfer_mgr_ptr->file_id_to_transfer_state_.find(ack.file_id);
-      if (it != transfer_mgr_ptr->file_id_to_transfer_state_.end()) {
-        state = it->second;
-      }
+    if (ack.flags & FLAG_FILE_REQ) {
+      std::vector<char> data_copy;
+      data_copy.assign(data, data + size);
+      std::string remote_user_id = std::string(user_id, user_id_size);
+      std::thread hand_thead([ack, data_copy, remote_user_id, transfer_mgr_ptr](){
+        transfer_mgr_ptr->HandFileReq(ack, data_copy, remote_user_id);
+      });
+      hand_thead.detach();
+      return;
     }
 
+    TransferManager::FileTransferState* state = &(transfer_mgr_ptr->_file_transfer);
     if (!state) {
       LOG_WARN("FileTransferAck: no props/state found for file_id={}",
                 ack.file_id);
@@ -357,23 +383,6 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
       );      
     }
 
-    // Update file transfer list: update progress and rate
-    {
-      // TODO, 这里没有执行，传多个文件、文件夹时需要处理
-      std::lock_guard<std::mutex> lock(state->file_transfer_list_mutex_);
-      for (auto& info : state->file_transfer_list_) {
-        if (info.file_id == ack.file_id) {
-          info.sent_bytes = ack.acked_offset;
-          info.file_size = ack.total_size;
-          info.rate_bps = rate_bps;
-          LOG_INFO("File transfer progress: file_id={}, file_name={}, sent_bytes={}, "
-                   "total_size={}, rate_bps={}",
-                   ack.file_id, info.file_name, ack.acked_offset, ack.total_size, rate_bps);
-          break;
-        }
-      }
-    }
-
     // Check if transfer is completed
     if ((ack.flags & 0x01) != 0) {
       // Transfer completed - receiver has finished receiving the file
@@ -384,26 +393,6 @@ void TransferManager::OnReceiveDataBufferCb(const char* data, size_t size,
           "File transfer completed via ACK, file_id={}, total_size={}, "
           "acked_offset={}",
           ack.file_id, ack.total_size, ack.acked_offset);
-
-      // Update file transfer list: mark as completed
-      {
-        std::lock_guard<std::mutex> lock(state->file_transfer_list_mutex_);
-        for (auto& info : state->file_transfer_list_) {
-          if (info.file_id == ack.file_id) {
-            info.status =
-                TransferManager::FileTransferState::FileTransferStatus::Completed;
-            info.sent_bytes = ack.total_size;
-            break;
-          }
-        }
-      }
-
-      // Unregister file_id mapping after completion
-      {
-        std::lock_guard<std::shared_mutex> lock(
-            transfer_mgr_ptr->file_id_to_transfer_state_mutex_);
-        transfer_mgr_ptr->file_id_to_transfer_state_.erase(ack.file_id);
-      }
     }
 
     return;
@@ -639,9 +628,29 @@ int TransferManager::CreateConnectionPeer() {
 
 
 int TransferManager::ConnectTo(const std::string& remote_id, const std::string& password) {
+  _remote_id = remote_id;
+  _remote_password = password;
   std::string remote_id_with_pwd = remote_id + "@" + password; 
   int ret = JoinConnection(_peer, remote_id_with_pwd.c_str());
-  return ret;
+
+  if (ret != 0) {
+    LOG_ERROR("Failed to connect to remote peer [{}], ret={}", remote_id.c_str(), ret);
+    return -1;
+  }
+
+  LOG_INFO("waitting for connection status...");
+  int try_count = 0;
+  while (_connection_status != ConnectionStatus::Connected && try_count < 10) {
+    sleep(1);
+    try_count++;
+    if (try_count >= 10) {
+      LOG_ERROR("Failed to connect to remote peer [{}], timeout", remote_id.c_str());
+      return -1;
+    }
+  }
+  LOG_INFO("connection [{}] success", remote_id);
+
+  return 0;
 }
 
 

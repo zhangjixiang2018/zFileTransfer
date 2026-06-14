@@ -179,6 +179,12 @@ bool FileReceiver::OnData(const char* data, size_t size) {
     return false;
   }
 
+  if (header.flags & 0x04) {
+    std::string err_msg(data + sizeof(FileChunkHeader), size - sizeof(FileChunkHeader));
+    LOG_ERROR("requst file faild!,err_msg:{}", err_msg);
+    return false;
+  }
+
   std::size_t header_and_name =
       sizeof(FileChunkHeader) + static_cast<std::size_t>(header.name_len);
   if (size < header_and_name ||
@@ -274,6 +280,8 @@ bool FileReceiver::HandleChunk(const FileChunkHeader& header,
     ack.acked_offset = header.offset + static_cast<uint64_t>(payload_size);
     ack.total_size = header.total_size;
     ack.flags = 0;
+
+    // TODO 传输数据计算
 
     LOG_DEBUG("FileReceiver: send ACK for file_id={}, acked_offset={}, received={}, total_size={}",
              header.file_id, ack.acked_offset, ctx.received, ack.total_size);

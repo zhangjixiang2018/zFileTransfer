@@ -29,7 +29,7 @@ struct FileChunkHeader {
   uint64_t total_size;  // total file size
   uint32_t chunk_size;  // payload size in this chunk
   uint16_t name_len;    // filename length (bytes), only set on first chunk
-  uint8_t flags;        // bit0: is_first, bit1: is_last, others reserved
+  uint8_t flags;        // bit0: is_first, bit1: is_last, bit2: error, others reserved
 };
 
 struct FileTransferAck {
@@ -37,9 +37,16 @@ struct FileTransferAck {
   uint32_t file_id;       // must match FileChunkHeader.file_id
   uint64_t acked_offset;  // received offset
   uint64_t total_size;    // total file size
-  uint32_t flags;         // bit0: completed, bit1: error
+  uint32_t flags;         // bit0: completed, bit1: error, bit2: file request 
+  uint16_t file_name_len; // filename length (bytes), only set on file request ack
 };
 #pragma pack(pop)
+
+enum FlagBits {
+  FLAG_COMPLETED = 1 << 0,
+  FLAG_ERROR     = 1 << 1,
+  FLAG_FILE_REQ  = 1 << 2
+};
 
 class FileSender {
  public:
@@ -115,6 +122,7 @@ class FileReceiver {
   std::filesystem::path output_dir_;
   std::unordered_map<uint32_t, FileContext> contexts_;
   OnSendAck on_send_ack_ = nullptr;
+  std::chrono::steady_clock::time_point _update_last_time{0};
 };
 
 }  // namespace zFileTransfer
