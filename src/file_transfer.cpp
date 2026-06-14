@@ -3,6 +3,8 @@
 #include <atomic>
 #include <chrono>
 
+#include <limits>
+
 #include "zlog.h"
 
 namespace zFileTransfer {
@@ -281,10 +283,14 @@ bool FileReceiver::HandleChunk(const FileChunkHeader& header,
     ack.total_size = header.total_size;
     ack.flags = 0;
 
-    // TODO 传输数据计算
+    std::string progress_info = UpdateReceiveProgress(ctx, ack.acked_offset);
+    if (!progress_info.empty()) {
+      LOG_INFO("FileReceiver: file_id={}, received={}/{}, {:.2f}%, {}",
+               header.file_id, ctx.received, ack.total_size,
+               ack.total_size > 0 ? (ctx.received * 100.0 / ack.total_size) : 0,
+               progress_info);
+    }
 
-    LOG_DEBUG("FileReceiver: send ACK for file_id={}, acked_offset={}, received={}, total_size={}",
-             header.file_id, ack.acked_offset, ctx.received, ack.total_size);
     
     bool is_last = (header.flags & 0x02) != 0;
     if (is_last || ctx.received >= ctx.total_size) {
@@ -313,6 +319,75 @@ bool FileReceiver::HandleChunk(const FileChunkHeader& header,
   }
 
   return true;
+}
+
+std::string FileReceiver::UpdateReceiveProgress(FileContext& ctx,
+                                                 uint64_t acked_offset) {
+  const auto now = std::chrono::steady_clock::now();
+  const double delta_seconds =
+      std::chrono::duration<double>(now - ctx.last_update_time).count();
+
+  // 每秒更新一次
+  if (delta_seconds < 1.0) {
+    return "";
+  }
+
+  // 估算接收速率 (bytes delta → bps)
+  if (acked_offset >= ctx.last_bytes) {
+    const uint64_t delta_bytes = acked_offset - ctx.last_bytes;
+    if (delta_bytes > 0 && delta_seconds > 0.0) {
+      const double bps =
+          (static_cast<double>(delta_bytes) * 8.0) / delta_seconds;
+      const double capped =
+          (std::min)(bps, static_cast<double>(
+                              (std::numeric_limits<uint32_t>::max)()));
+      uint32_t estimated_rate_bps = static_cast<uint32_t>(capped);
+
+      if (ctx.rate_bps > 0 && estimated_rate_bps > 0) {
+        ctx.rate_bps = static_cast<uint32_t>(ctx.rate_bps * 0.7 +
+                                              estimated_rate_bps * 0.3);
+      } else if (estimated_rate_bps > 0) {
+        ctx.rate_bps = estimated_rate_bps;
+      }
+    }
+  }
+
+  ctx.last_bytes = acked_offset;
+  ctx.last_update_time = now;
+
+  // 速率单位
+  double rate_kbps = ctx.rate_bps / 8.0 / 1024;
+  double rate_mbps = rate_kbps / 1024;
+  std::string rate_str;
+  if (rate_mbps >= 1.0)
+    rate_str = fmt::format("{:.2f} MB/s", rate_mbps);
+  else
+    rate_str = fmt::format("{:.2f} KB/s", rate_kbps);
+
+  // ETA
+  uint64_t remaining_bytes = ctx.total_size - acked_offset;
+  double seconds_left = 0.0;
+  if (ctx.rate_bps > 0) {
+    seconds_left = remaining_bytes * 8.0 / ctx.rate_bps;
+  }
+
+  std::string eta_str;
+  if (seconds_left > 0) {
+    int sec = static_cast<int>(seconds_left);
+    int h = sec / 3600;
+    int m = (sec % 3600) / 60;
+    int s = sec % 60;
+    if (h > 0)
+      eta_str = fmt::format("{}h {}m {}s", h, m, s);
+    else if (m > 0)
+      eta_str = fmt::format("{}m {}s", m, s);
+    else
+      eta_str = fmt::format("{}s", s);
+  } else {
+    eta_str = "N/A";
+  }
+
+  return fmt::format("{}, ETA={}", rate_str, eta_str);
 }
 
 }  // namespace zFileTransfer

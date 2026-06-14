@@ -7,6 +7,7 @@
 #ifndef _FILE_TRANSFER_H_
 #define _FILE_TRANSFER_H_
 
+#include <chrono>
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
@@ -83,6 +84,9 @@ class FileReceiver {
     uint64_t total_size = 0;
     uint64_t received = 0;
     std::ofstream ofs;
+    uint64_t last_bytes = 0;
+    std::chrono::steady_clock::time_point last_update_time{};
+    uint32_t rate_bps = 0;
   };
 
   using OnFileComplete =
@@ -118,11 +122,14 @@ class FileReceiver {
   bool HandleChunk(const FileChunkHeader& header, const char* payload,
                    size_t payload_size, const std::string* file_name);
 
+  // 计算接收速度并返回格式化字符串，同时更新 ctx 中的速度追踪字段
+  // 返回值: 格式化后的速率字符串，如 "1.23 MB/s" 或 "456.00 KB/s"
+  std::string UpdateReceiveProgress(FileContext& ctx, uint64_t acked_offset);
+
  private:
   std::filesystem::path output_dir_;
   std::unordered_map<uint32_t, FileContext> contexts_;
   OnSendAck on_send_ack_ = nullptr;
-  std::chrono::steady_clock::time_point _update_last_time{0};
 };
 
 }  // namespace zFileTransfer
